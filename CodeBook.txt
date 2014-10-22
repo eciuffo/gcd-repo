@@ -1,0 +1,92 @@
+            CodeBook
+	-----------------------
+Filename: average.txt
+
+subject `- This column contains the subject to whom measures were taken. Since we had 30 participants, this column contains participants 1 through 30
+
+activity - This column contains the activity name for each activity performed by each participant. Each observation contains one of the possible values:
+WALKING, 
+WALKING_UPSTAIRS,
+WALKING_DOWNSTAIRS, 
+SITTING,
+STANDING
+LAYING
+
+ Measures are columns containing the average of one of the possible measures computed per activity/subject pair. Below the list of columns:
+t-BodyAcc-mean-X	
+t-BodyAcc-mean-Y	
+t-BodyAcc-mean-Z	
+t-GravityAcc-mean-X	
+t-GravityAcc-mean-Y	
+t-GravityAcc-mean-Z	
+t-BodyAccJerk-mean-X	
+t-BodyAccJerk-mean-Y	
+t-BodyAccJerk-mean-Z	
+t-BodyGyro-mean-X	
+t-BodyGyro-mean-Y	
+t-BodyGyro-mean-Z	
+t-BodyGyroJerk-mean-X	
+t-BodyGyroJerk-mean-Y	
+t-BodyGyroJerk-mean-Z	
+t-BodyAccMag-mean	
+t-GravityAccMag-mean	
+t-BodyAccJerkMag-mean	
+t-BodyGyroMag-mean	
+t-BodyGyroJerkMag-mean	
+f-BodyAcc-mean-X	
+f-BodyAcc-mean-Y	
+f-BodyAcc-mean-Z	
+f-BodyAcc-meanFreq-X	
+f-BodyAcc-meanFreq-Y	
+f-BodyAcc-meanFreq-Z	
+f-BodyAccJerk-mean-X	
+f-BodyAccJerk-mean-Y	
+f-BodyAccJerk-mean-Z	
+f-BodyAccJerk-meanFreq-X	
+f-BodyAccJerk-meanFreq-Y	
+f-BodyAccJerk-meanFreq-Z	
+f-BodyGyro-mean-X	
+f-BodyGyro-mean-Y	
+f-BodyGyro-mean-Z	
+f-BodyGyro-meanFreq-X	
+f-BodyGyro-meanFreq-Y	
+f-BodyGyro-meanFreq-Z	
+f-BodyAccMag-mean	
+f-BodyAccMag-meanFreq	
+f-BodyBodyAccJerkMag-mean	
+f-BodyBodyAccJerkMag-meanFreq	
+f-BodyBodyGyroMag-mean	
+f-BodyBodyGyroMag-meanFreq	
+f-BodyBodyGyroJerkMag-mean	
+f-BodyBodyGyroJerkMag-meanFreq	
+at-BodyAccJerkMeangravit-mean	
+at-BodyGyroMeangravit-mean	
+at-BodyGyroJerkMeangravit-mean	
+aX-gravit-mean	
+aY-gravit-mean	
+aZ-gravit-mean
+
+The columns above represent all possible measures taken and they could be broken dows into The Domain,  the namee of the measure, and the type of measure. All separated by the "-" character. They were not split by DOmain/name and type of measure as this was not needed to accomplish the requested result.
+
+The following were the transformations applied to thease measures (features):
+# Edit features vector to separate Domains by adding  "-" after first character
+featureVector <- sub("^f","f-",features$V2,)
+featureVector <- sub("^t","t-",featureVector,)
+
+# Creating Domain "at" meaning "angle t", aX, aY and aZ meaning "angle X, Y and Z"
+featureVector <- sub("angle\\(t","at-",featureVector,)
+featureVector <- sub("angle\\(X","aX-",featureVector,)
+featureVector <- sub("angle\\(Y","aY-",featureVector,)
+featureVector <- sub("angle\\(Z","aZ-",featureVector,)
+
+# Removing "," character from names
+featureVector <- sub("\\,","",featureVector,)
+
+# removing "(", ")" characters from feature names
+featureVector <- gsub("\\(","",featureVector,)
+featureVector <- gsub("\\)","",featureVector,)
+
+# Separating the word "Mean" from the feature name
+featureVector <- sub("[a-z]Mean$","-mean",featureVector,)
+
+
